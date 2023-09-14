@@ -2,3 +2,14 @@ name = "Astro"
 uuid = "c36f77fa-2ac2-45a9-8ce6-465ee13e27d4"
 authors = ["Heptazhou <zhou@0h7z.com>"]
 version = "0.1.0"
+
+[deps]
+AstroAngles = "5c4adb95-c1fc-4c53-b4ea-2a94080c53d2"
+AstroLib = "c7932e45-9af1-51e7-9da9-f004cd3a462b"
+AstroTime = "c61b5328-d09d-5e37-a9a8-0eb41c39009c"
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
+SkyCoords = "fc659fc5-75a3-5475-a2ea-3da92c065361"
+
+[compat]
+julia = "≥ 1"

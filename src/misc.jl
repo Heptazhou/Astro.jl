@@ -13,15 +13,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-module Astro
+@reexport using AstroLib: AstroLib, AU,
+	airtovac, vactoair,
+	altaz2hadec,
+	co_aberration, co_nutate, co_refract,
+	nutate, precess
+export LS, LY, PC
 
-using Reexport: @reexport
-
-include("misc.jl")
-include("time.jl")
-include("unit.jl")
-
-include("coor.jl") # time, unit
-
-end # module Astro
+const LS = 299_792_458
+const LY = 9_460_730_472_580_800
+const PC = 648_000AU / π
 
