@@ -30,7 +30,7 @@ export j2000, j2000year, julian, mjd,
 	datetime2mjd, mjd2datetime
 
 const j2000(d::Date)          = AstroTime.j2000(AstroTime.Date(d))
-const j2000(dt::DateTime)     = AstroTime.j2000(AstroTime.DateTime(dt - Hour(12)))
+const j2000(dt::DateTime)     = AstroTime.j2000(AstroTime.DateTime(dt - 12Hour))
 const j2000year(d::Date)      = 2000 + JULIANYEAR \ j2000(d)
 const j2000year(dt::DateTime) = 2000 + JULIANYEAR \ j2000(dt)
 Dates.today(::Type{UTC})      = Date(now(UTC))
@@ -40,10 +40,10 @@ const EPOCH_MJD = value(DateTime(+1858, 11, 17, 00))
 const EPOCH_NIX = value(DateTime(+1970, 01, 01, 00))
 const EPOCH_J2K = value(DateTime(+2000, 01, 01, 12))
 
-const datetime2j2000(dt::DateTime) = (value(dt) - EPOCH_J2K) / 86400000.0
-const datetime2mjd(dt::DateTime)   = (value(dt) - EPOCH_MJD) / 86400000.0
-const j20002datetime(x::Real)      = DateTime(UTM(EPOCH_J2K + round(Int64, BigInt(86400000)x)))
-const mjd2datetime(x::Real)        = DateTime(UTM(EPOCH_MJD + round(Int64, BigInt(86400000)x)))
+const datetime2j2000(dt::DateTime) = (value(dt) - EPOCH_J2K) / 86400000Float64
+const datetime2mjd(dt::DateTime)   = (value(dt) - EPOCH_MJD) / 86400000Float64
+const j20002datetime(x::Real)      = DateTime(UTM(EPOCH_J2K + round(Int64, (86400000BigInt)x)))
+const mjd2datetime(x::Real)        = DateTime(UTM(EPOCH_MJD + round(Int64, (86400000BigInt)x)))
 
 const julian(d::Date)      = datetime2julian(d |> DateTime)
 const julian(dt::DateTime) = datetime2julian(dt)

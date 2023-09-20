@@ -17,6 +17,11 @@ module Astro
 
 using Reexport: @reexport
 
+import Base.*
+
+*(x::Real, ::Type{T}) where T = T(x)
+*(x::Real, f::Function)       = f(x)
+
 include("misc.jl")
 include("time.jl")
 include("unit.jl")
