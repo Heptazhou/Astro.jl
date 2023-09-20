@@ -21,7 +21,7 @@ using SkyCoords:
 	ICRSCoords
 export @J_str, coor2dd, coor2hd, coor2rr,
 	CoorEcliptic,
-	CoorFK5,
+	CoorEquatorial, CoorFK5,
 	CoorGalactic,
 	CoorICRS
 
@@ -33,6 +33,7 @@ const DateType = Union{DateTime, Date}
 const VecOrTup = Union{VecOrMat, Tuple}
 
 # https://en.wikipedia.org/wiki/Equatorial_coordinate_system
+const CoorEquatorial(xs...)                             = CoorFK5(xs...)
 const CoorFK5(α::Any, δ::Any, d::DateType)              = CoorFK5(α, δ, j2000year(d))
 const CoorFK5(α::Real, δ::Real, e::Real = 2000)         = FK5Coords{Float64(e)}(deg2rad(α), deg2rad(δ))
 const CoorFK5(α::VecOrTup, δ::VecOrTup, e::Real = 2000) = FK5Coords{Float64(e)}(hms2rad(α), dms2rad(δ))

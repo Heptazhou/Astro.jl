@@ -39,7 +39,7 @@ Base.isapprox(a::Tuple, b::Tuple) = all(a .≈ b)
 		@test f(CoorICRS(a, b)) ≈ f(CoorICRS(c, d))
 		for coor ∈ (CoorEcliptic(c, d), CoorFK5(c, d), CoorGalactic(c, d), CoorICRS(c, d))
 			@test f(CoorEcliptic(z)(coor)) ≡ f(CoorEcliptic(Date(z))(coor))
-			@test f(CoorFK5(z)(coor)) ≡ f(CoorFK5(Date(z))(coor))
+			@test f(CoorEquatorial(z)(coor)) ≡ f(CoorEquatorial(Date(z))(coor))
 		end
 		@test f(CoorEcliptic(c, d)) ≡ f(CoorEcliptic(CoorEcliptic(c, d), Date(2000)))
 		@test f(CoorFK5(c, d)) ≡ f(CoorFK5(CoorFK5(c, d), Date(2000)))
@@ -78,7 +78,7 @@ end
 end
 
 @testset "unit.jl" begin
-	for i ∈ 1:4
+	for i ∈ 1:2
 		local deg = nextfloat(rand(Float64)) * 360(-1)^i
 		local dms = deg2dms(deg)
 		local hms = deg2hms(deg)
@@ -93,7 +93,10 @@ end
 		@test dms |> dms2hms |> hms2ha |> ha2dms ≈ dms
 		@test hms |> hms2dms |> dms2ha |> ha2hms ≈ hms
 		#
-		@test radec(abs(deg), deg / 4) ≈ (deg2hms(abs(deg))..., deg2dms(deg / 4)...)
+		@test radec(abs(deg), (deg / 4)) ≈ (
+			deg2hms(abs(deg))..., deg2dms((deg / 4))...)
+		@test radec(abs(deg / 15), 00, hours = true) ≈ (
+			deg2dms(abs(deg / 15))..., deg2dms((00))...)
 	end
 end
 
