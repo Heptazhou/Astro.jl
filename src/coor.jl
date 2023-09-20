@@ -60,7 +60,7 @@ const CoorFK5(x::AbstractSkyCoords, e::Real = 2000)      = FK5Coords{Float64(e)}
 const CoorGalactic(x::AbstractSkyCoords)                 = GalCoords(x)
 const CoorICRS(x::AbstractSkyCoords)                     = ICRSCoords(x)
 
-const SDSS(α::Integer, δ::Integer) = hms2deg(α ÷ 100, α % 100), copysign(dms2deg(δ ÷ 100, δ % 100), δ)
+const SDSS(α::Integer, δ::Integer) = hms2deg(α ÷ 100, α % 100), dms2deg(δ ÷ 100, δ % 100) |> d -> copysign(d, δ)
 const SDSS(α::Float32, δ::Float32) = SDSS(round.(Int16, (α, δ))...)
 const SDSS(α::Float64, δ::Float64) = begin
 	hms2deg(Int16(α ÷ 10000), Int16(α ÷ 100 % 100), (α % 100)),

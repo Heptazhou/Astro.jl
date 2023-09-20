@@ -42,15 +42,16 @@ const EPOCH_J2K = value(DateTime(+2000, 01, 01, 12))
 
 const datetime2j2000(dt::DateTime) = (value(dt) - EPOCH_J2K) / 86400000.0
 const datetime2mjd(dt::DateTime)   = (value(dt) - EPOCH_MJD) / 86400000.0
-const j20002datetime(x::Real)      = DateTime(UTM(EPOCH_J2K + round(Int64, Int64(86400000)x)))
-const mjd2datetime(x::Real)        = DateTime(UTM(EPOCH_MJD + round(Int64, Int64(86400000)x)))
+const j20002datetime(x::Real)      = DateTime(UTM(EPOCH_J2K + round(Int64, BigInt(86400000)x)))
+const mjd2datetime(x::Real)        = DateTime(UTM(EPOCH_MJD + round(Int64, BigInt(86400000)x)))
 
 const julian(d::Date)      = datetime2julian(d |> DateTime)
 const julian(dt::DateTime) = datetime2julian(dt)
-const mjd(d::Date)         = datetime2mjd(d |> DateTime) |> Int
+const mjd(d::Date)         = datetime2mjd(d |> DateTime) |> Int64
 const mjd(dt::DateTime)    = datetime2mjd(dt)
 
 const j2000(x::Real)  = x |> j20002datetime
 const julian(x::Real) = x |> julian2datetime
+const mjd(x::Integer) = x |> mjd2datetime |> Date
 const mjd(x::Real)    = x |> mjd2datetime
 

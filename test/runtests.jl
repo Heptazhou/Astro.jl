@@ -64,7 +64,7 @@ end
 	for dt ∈ (value(today(UTC)), rand(UInt16) + rand(Float64)) .|> mjd2datetime
 		@test value(j2000(00)) ≡ Astro.EPOCH_J2K
 		@test value(julian(0)) ≡ Astro.EPOCH_JUL ≡ Dates.JULIANEPOCH
-		@test value(mjd(0000)) ≡ Astro.EPOCH_MJD
+		@test value(mjd(0.00)) ≡ Astro.EPOCH_MJD ≡ value(DateTime(mjd(0)))
 		#
 		@test 0002000.0 * JULIANYEAR + j2000(dt) ≈ j2000year(dt) * JULIANYEAR
 		@test 0051544.5 ≡ datetime2mjd(dt) - datetime2j2000(dt) ≡ J2000_TO_MJD
@@ -92,6 +92,8 @@ end
 		#
 		@test dms |> dms2hms |> hms2ha |> ha2dms ≈ dms
 		@test hms |> hms2dms |> dms2ha |> ha2hms ≈ hms
+		#
+		@test radec(abs(deg), deg / 4) ≈ (deg2hms(abs(deg))..., deg2dms(deg / 4)...)
 	end
 end
 
