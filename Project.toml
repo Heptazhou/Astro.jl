@@ -1,7 +1,7 @@
 name = "Astro"
 uuid = "c36f77fa-2ac2-45a9-8ce6-465ee13e27d4"
 authors = ["Heptazhou <zhou@0h7z.com>"]
-version = "0.1.3"
+version = "0.1.4"
 
 [deps]
 AstroAngles = "5c4adb95-c1fc-4c53-b4ea-2a94080c53d2"

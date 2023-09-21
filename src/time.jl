@@ -50,8 +50,9 @@ const julian(dt::DateTime) = datetime2julian(dt)
 const mjd(d::Date)         = datetime2mjd(d |> DateTime) |> Int64
 const mjd(dt::DateTime)    = datetime2mjd(dt)
 
-const j2000(x::Real)  = x |> j20002datetime
-const julian(x::Real) = x |> julian2datetime
-const mjd(x::Integer) = x |> mjd2datetime |> Date
-const mjd(x::Real)    = x |> mjd2datetime
+const j2000(x::Real)     = j20002datetime(x)
+const j2000year(x::Real) = j20002datetime((x - 2000)JULIANYEAR)
+const julian(x::Real)    = julian2datetime(x)
+const mjd(x::Integer)    = mjd2datetime(x) |> Date
+const mjd(x::Real)       = mjd2datetime(x)
 

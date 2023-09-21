@@ -21,6 +21,6 @@
 export LS, LY, PC
 
 const LS = 299_792_458
-const LY = 9_460_730_472_580_800
+const LY = 009_460_730_472_580_800
 const PC = 648_000AU / π
 

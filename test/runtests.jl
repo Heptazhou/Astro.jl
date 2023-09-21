@@ -62,7 +62,7 @@ end
 	local J2000_TO_MJD    = AstroTime.Epochs.J2000_TO_MJD |> AstroTime.value
 	local MJD_TO_JULIAN   = AstroTime.EarthOrientation.MJD_EPOCH
 	for dt ∈ (value(today(UTC)), rand(UInt16) + rand(Float64)) .|> mjd2datetime
-		@test value(j2000(00)) ≡ Astro.EPOCH_J2K
+		@test value(j2000(00)) ≡ Astro.EPOCH_J2K ≡ value(j2000year(2e3))
 		@test value(julian(0)) ≡ Astro.EPOCH_JUL ≡ Dates.JULIANEPOCH
 		@test value(mjd(0.00)) ≡ Astro.EPOCH_MJD ≡ value(DateTime(0mjd))
 		#
