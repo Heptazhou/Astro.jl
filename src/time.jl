@@ -25,9 +25,14 @@
 	datetime2julian, julian2datetime,
 	datetime2rata, rata2datetime,
 	datetime2unix, unix2datetime
-export j2000, j2000year, julian, mjd,
+export J2000_TO_JULIAN, J2000_TO_MJD, MJD_TO_JULIAN
+export j2000, j2000year, julian, mjd, modified_julian,
 	datetime2j2000, j20002datetime,
 	datetime2mjd, mjd2datetime
+
+const J2000_TO_JULIAN = (AstroTime.Epochs.J2000_TO_JULIAN |> AstroTime.value)::Float64
+const J2000_TO_MJD    = (AstroTime.Epochs.J2000_TO_MJD |> AstroTime.value)::Float64
+const MJD_TO_JULIAN   = (AstroTime.EarthOrientation.MJD_EPOCH)::Float64
 
 const j2000(d::Date)          = AstroTime.j2000(AstroTime.Date(d))
 const j2000(dt::DateTime)     = AstroTime.j2000(AstroTime.DateTime(dt - 12Hour))
@@ -35,10 +40,10 @@ const j2000year(d::Date)      = 2000 + JULIANYEAR \ j2000(d)
 const j2000year(dt::DateTime) = 2000 + JULIANYEAR \ j2000(dt)
 Dates.today(::Type{UTC})      = Date(now(UTC))
 
-const EPOCH_JUL = value(DateTime(-4713, 11, 24, 12))
-const EPOCH_MJD = value(DateTime(+1858, 11, 17, 00))
-const EPOCH_NIX = value(DateTime(+1970, 01, 01, 00))
-const EPOCH_J2K = value(DateTime(+2000, 01, 01, 12))
+const EPOCH_JUL = value(DateTime(-4713, 11, 24, 12))::Int64
+const EPOCH_MJD = value(DateTime(+1858, 11, 17, 00))::Int64
+const EPOCH_NIX = value(DateTime(+1970, 01, 01, 00))::Int64
+const EPOCH_J2K = value(DateTime(+2000, 01, 01, 12))::Int64
 
 const datetime2j2000(dt::DateTime) = (value(dt) - EPOCH_J2K) / 86400000Float64
 const datetime2mjd(dt::DateTime)   = (value(dt) - EPOCH_MJD) / 86400000Float64
@@ -55,4 +60,5 @@ const j2000year(x::Real) = j20002datetime((x - 2000)JULIANYEAR)
 const julian(x::Real)    = julian2datetime(x)
 const mjd(x::Integer)    = mjd2datetime(x) |> Date
 const mjd(x::Real)       = mjd2datetime(x)
+const modified_julian(x) = mjd(x)
 
