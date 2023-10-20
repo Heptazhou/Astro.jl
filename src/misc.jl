@@ -13,13 +13,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-@reexport using AstroLib: AstroLib, AU,
+@reexport using AstroLib: AstroLib,
 	airtovac, vactoair,
 	altaz2hadec,
 	co_aberration, co_nutate, co_refract,
 	nutate, precess
-export LS, LY, PC
+export AU, LS, LY, PC
 
+const AU = 149_597_870_700
 const LS = 299_792_458
 const LY = 009_460_730_472_580_800
 const PC = 648_000AU / π

@@ -15,9 +15,13 @@
 
 module Astro
 
+import Base.*
+
+using Dates: DateTime, Date
 using Reexport: @reexport
 
-import Base.*
+const DateType = Union{DateTime, Date}
+const VecOrTup = Union{VecOrMat, Tuple}
 
 *(x::Real, ::Type{T}) where T = T(x)
 *(x::Real, f::Function)       = f(x)

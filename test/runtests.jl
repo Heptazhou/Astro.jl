@@ -56,21 +56,22 @@ end
 end
 
 @testset "time.jl" begin
-	@test j2000year(Date(2100)) ≡ 2100.0
+	@test 2100.0 ≡ j2000year(Date(2100.0))
+	@test J2000_TO_JULIAN ≡ J2000_TO_MJD + MJD_TO_JULIAN
 	@test JULIANYEAR ≡ JULIANCENTURY / 100
-	for dt ∈ (value(today(UTC)), rand(UInt16) + rand(Float64)) .|> mjd2datetime
+	for dt ∈ (value(today(UTC)), rand(Int32) + rand(Float64)) .|> mjd2datetime
 		@test value(j2000(00)) ≡ Astro.EPOCH_J2K ≡ value(j2000year(2e3))
 		@test value(julian(0)) ≡ Astro.EPOCH_JUL ≡ Dates.JULIANEPOCH
 		@test value(mjd(0.00)) ≡ Astro.EPOCH_MJD ≡ value(DateTime(0mjd))
 		#
-		@test 0002000.0 * JULIANYEAR + j2000(dt) ≈ j2000year(dt) * JULIANYEAR
-		@test 0051544.5 ≡ datetime2mjd(dt) - datetime2j2000(dt) ≡ J2000_TO_MJD
-		@test 2400000.5 ≡ datetime2julian(dt) - datetime2mjd(dt) ≡ MJD_TO_JULIAN
-		@test 2451545.0 ≡ datetime2julian(dt) - datetime2j2000(dt) ≡ J2000_TO_JULIAN
-		@test j2000(dt) ≡ datetime2j2000(dt) ≈ modified_julian(dt) - J2000_TO_MJD
-		@test round(Int, j2000(dt) + 0000, RoundNearestTiesAway) ≡ j2000(Date(dt))
-		@test round(Int, julian(dt) + 0.5, RoundToZero) - 0.5 ≡ julian(Date(dt))
-		@test round(Int, mjd(dt) + 000000, RoundToZero) ≡ mjd(Date(dt))
+		@test 2000 + JULIANYEAR \ j2000(dt) ≈ j2000year(dt)
+		@test datetime2j2000(dt) ≡ j2000(dt) ≡ mjd(dt) - J2000_TO_MJD
+		@test datetime2julian(dt) - datetime2j2000(dt) ≡ J2000_TO_JULIAN
+		@test datetime2julian(dt) - datetime2mjd(dt) ≡ MJD_TO_JULIAN
+		@test datetime2mjd(dt) - datetime2j2000(dt) ≡ J2000_TO_MJD
+		@test floor(Int, j2000(dt) + 00.5) ≡ j2000(Date(dt))
+		@test floor(Int, julian(dt) + 0.5) ≡ julian(Date(dt)) + 0.5 |> Int
+		@test floor(Int, mjd(dt) + 0000.0) ≡ modified_julian(Date(dt))
 	end
 end
 

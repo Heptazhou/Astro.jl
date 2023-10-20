@@ -29,8 +29,6 @@ Base.Tuple(coor::AbstractSkyCoords) = (SkyCoords.lon(coor), SkyCoords.lat(coor))
 const coor2dd(coor::AbstractSkyCoords) = Tuple(coor) |> t -> (rad2deg(t[1]), rad2deg(t[2]))
 const coor2hd(coor::AbstractSkyCoords) = Tuple(coor) |> t -> (rad2hms(t[1]), rad2dms(t[2]))
 const coor2rr(coor::AbstractSkyCoords) = Tuple(coor)
-const DateType = Union{DateTime, Date}
-const VecOrTup = Union{VecOrMat, Tuple}
 
 # https://en.wikipedia.org/wiki/Equatorial_coordinate_system
 const CoorEquatorial(xs...)                             = CoorFK5(xs...)
