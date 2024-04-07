@@ -1,2 +1,3 @@
 [deps]
+AstroTime = "c61b5328-d09d-5e37-a9a8-0eb41c39009c"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

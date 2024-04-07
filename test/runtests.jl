@@ -1,9 +1,8 @@
-# Copyright (C) 2023 Heptazhou <zhou@0h7z.com>
+# Copyright (C) 2023-2024 Heptazhou <zhou@0h7z.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
+# published by the Free Software Foundation, version 3.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,6 +13,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using Astro, Test
+using AstroTime: AstroTime
 
 Base.isapprox(a::Tuple, b::Tuple) = all(a .≈ b)
 
@@ -72,6 +72,19 @@ end
 		@test floor(Int, j2000(dt) + 00.5) ≡ j2000(Date(dt))
 		@test floor(Int, julian(dt) + 0.5) ≡ julian(Date(dt)) + 0.5 |> Int
 		@test floor(Int, mjd(dt) + 0000.0) ≡ modified_julian(Date(dt))
+	end
+	local Atime = AstroTime
+	for dd ∈ 01:04
+		@test isa(Dates.Date(1582, 10, dd), Dates.Date)
+		@test isa(Atime.Date(1582, 10, dd), Atime.Date)
+	end
+	for dd ∈ 05:14
+		@test isa(Dates.Date(1582, 10, dd), Dates.Date)
+		@test_throws ArgumentError("Invalid date.") Atime.Date(1582, 10, dd)
+	end
+	for dd ∈ 15:31
+		@test isa(Dates.Date(1582, 10, dd), Dates.Date)
+		@test isa(Atime.Date(1582, 10, dd), Atime.Date)
 	end
 end
 
