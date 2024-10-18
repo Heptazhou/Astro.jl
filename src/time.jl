@@ -1,4 +1,4 @@
-# Copyright (C) 2023 Heptazhou <zhou@0h7z.com>
+# Copyright (C) 2023-2024 Heptazhou <zhou@0h7z.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -35,6 +35,10 @@ const EPOCH_JUL = value(DateTime(-4713, 11, 24, 12))::Int64
 const EPOCH_MJD = value(DateTime(+1858, 11, 17, 00))::Int64
 const EPOCH_NIX = value(DateTime(+1970, 01, 01, 00))::Int64
 const EPOCH_J2K = value(DateTime(+2000, 01, 01, 12))::Int64
+
+for x ∈ (:EPOCH_JUL, :EPOCH_MJD, :EPOCH_NIX, :EPOCH_J2K)
+	@eval @doc """	$($(string(x)))::$(typeof($x)) = $(signpad(DateTime(UTM($x)))) = $($x)""" $x
+end
 
 const datetime2j2000(dt::DateTime) = (value(dt) - EPOCH_J2K) / 86400_000Float64
 const datetime2mjd(dt::DateTime)   = (value(dt) - EPOCH_MJD) / 86400_000Float64

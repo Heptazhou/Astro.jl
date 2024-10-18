@@ -1,4 +1,4 @@
-# Copyright (C) 2023 Heptazhou <zhou@0h7z.com>
+# Copyright (C) 2023-2024 Heptazhou <zhou@0h7z.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -24,6 +24,10 @@ const VecOrTup = Union{VecOrMat, Tuple}
 
 *(x::Real, ::Type{T}) where T = T(x)
 *(x::Real, f::Function)       = f(x)
+
+signpad(x::Any)::String    = signpad(string(x))
+signpad(x::Real)::String   = signbit(x) ? "$x" : " $x"
+signpad(x::String)::String = isdigit(x[begin]) ? " $x" : x
 
 include("misc.jl")
 include("time.jl")

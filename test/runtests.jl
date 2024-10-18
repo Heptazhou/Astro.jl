@@ -17,6 +17,16 @@ using AstroTime: AstroTime
 
 Base.isapprox(a::Tuple, b::Tuple) = all(a .≈ b)
 
+@testset "Astro.jl" begin
+	local t1, t2 = DateTime.([-1, 2000])
+	local signpad = Astro.signpad
+	@test signpad(t2) == lpad(t2, 20)
+	@test signpad(t1) == lpad(t1, 20)
+	@test signpad(+1) == " 1"
+	@test signpad(+0) == " 0"
+	@test signpad(-1) == "-1"
+end
+
 @testset "coor.jl" begin
 	local SDSS = Astro.SDSS
 	# https://classic.sdss.org/dr7/coverage/IAU.html

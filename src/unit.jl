@@ -1,4 +1,4 @@
-# Copyright (C) 2023 Heptazhou <zhou@0h7z.com>
+# Copyright (C) 2023-2024 Heptazhou <zhou@0h7z.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -14,12 +14,9 @@
 
 @reexport using AstroAngles: AstroAngles,
 	deg2dms,
-	deg2ha,
 	deg2hms,
-	ha2deg,
 	ha2dms,
 	ha2hms,
-	ha2rad,
 	rad2dms,
 	rad2ha,
 	rad2hms
@@ -28,10 +25,13 @@
 	sec2rad
 
 for f ∈ [
+	:deg2ha
 	:dms2deg
 	:dms2ha
 	:dms2hms
 	:dms2rad
+	:ha2deg
+	:ha2rad
 	:hms2deg
 	:hms2dms
 	:hms2ha
@@ -40,6 +40,10 @@ for f ∈ [
 	@eval export $f
 	@eval const $f(parts) = $f(parts...)
 end
+
+const deg2ha(angle::Real) = 024rem(angle, 360) / 360
+const ha2deg(angle::Real) = 360rem(angle, 024) / 024
+const ha2rad(angle::Real) = (π)rem(angle, 024) / 012
 
 const dms2deg(d::Real, m::Real = 0, s::Real = 0) = Float64.(shift_l(d, m, s))
 const dms2ha(d::Real, m::Real = 0, s::Real = 0)  = Float64.(shift_l(d, m, s) |> deg2ha)
